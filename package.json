@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/cypress open"
+    "test": "cypress open"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "cypress": "^12.8.1"
-  }
+  },
+  "description": ""
 }
