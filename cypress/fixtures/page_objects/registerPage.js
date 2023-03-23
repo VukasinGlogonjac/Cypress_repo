@@ -21,5 +21,12 @@ class RegisterPage {
       get submitBtn() {
         return cy.get ('.btn')
       }
+      get registerBtn() {
+        return cy.get ("a[href='/register']")
+      }
+      get registerTitle() {
+        return cy.get (".title-style")
+      }
+      
   }
   export const registerPage = new RegisterPage()
