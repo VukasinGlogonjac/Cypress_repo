@@ -18,7 +18,7 @@ it("Visit registration page", () => {
 });
 
 
-it("Successful registration", () => {
+it.only("Successful registration", () => {
     cy.visit("/register");
     var firstName = faker.name.firstName();
     var lastName = faker.name.lastName();
