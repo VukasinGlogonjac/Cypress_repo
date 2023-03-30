@@ -65,6 +65,28 @@ describe("Register Page", () => {
         registerPage.formCheckInput.should('be.checked')
         registerPage.submitBtn.click();
     });
+    it.only('Intercept registration', ()=>{
+        var firstName = faker.name.firstName();
+        var lastName = faker.name.lastName();
+        var email = faker.internet.email();
+        var password = faker.internet.password();
+
+        cy.intercept({
+            method: 'POST',
+            url: 'https://gallery-api.vivifyideas.com/api/auth/register',
+        }).as('userSuccessfullyRegistered');
+
+        registerPage.firstNameInputField.type(firstName);
+        registerPage.lastNameInputField.type(lastName);
+        registerPage.emailInputField.type(email);
+        registerPage.passwordInputField.type(password);
+        registerPage.passwordConfInputField.type(password);
+        registerPage.formCheckInput.click();
+        registerPage.submitBtn.click();
+        cy.wait('@userSuccessfullyRegistered').then((inter) => {
+            cy.log(inter);
+    });
+})
 
     it("Try to register with an empty input fields", () => {
         cy.visit("/register");
