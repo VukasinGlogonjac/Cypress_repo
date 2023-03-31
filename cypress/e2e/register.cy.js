@@ -72,10 +72,12 @@ describe("Register Page", () => {
         var password = faker.internet.password();
 
         cy.intercept({
-            method: 'POST',
-            url: 'https://gallery-api.vivifyideas.com/api/auth/register',
-        }).as('userSuccessfullyRegistered');
+            method: 'GET',
+            url: 'https://gallery-api.vivifyideas.com/api/galleries?page=1&term='
 
+        }).as('HomePageLoaded')
+
+        cy.visit('/register')
         registerPage.firstNameInputField.type(firstName);
         registerPage.lastNameInputField.type(lastName);
         registerPage.emailInputField.type(email);
@@ -83,8 +85,13 @@ describe("Register Page", () => {
         registerPage.passwordConfInputField.type(password);
         registerPage.formCheckInput.click();
         registerPage.submitBtn.click();
-        cy.wait('@userSuccessfullyRegistered').then((inter) => {
+        
+        cy.wait('@HomePageLoaded').then((inter) => {
             cy.log(inter);
+            const status = inter.response.statusCode;
+            const numberofGalleries = inter.response.body.galleries.length
+            expect(numberofGalleries).eq(10)
+            expect(status).eq(200)
     });
 })
 
